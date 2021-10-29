@@ -8,6 +8,9 @@ import time
 import csv
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.keys import Keys
+import json
+from selenium import webdriver
+from selenium.webdriver.common.proxy import *
 
 
 # Source Code
@@ -25,12 +28,21 @@ class Login:
     def Infomation(self):
         print("-----------------")
         # Open chrome web browser and headless
-        # driver = webdriver.Chrome(options=options, executable_path=r'chromedriver.exe')
+        driver = webdriver.Chrome()
+        # Get Trace_id dynamically 
+        try:
+            driver.get('https://beta.scouted.by/v1/exportDeepScouting?id=d0dd6e0cf620541fdd14527cc9a9813a&signature=6jNUs1R47zOMaW8goYDxIa5XIzA=')
+            time.sleep(6)
+            ids =driver.find_element_by_xpath('//*[@style="word-wrap: break-word; white-space: pre-wrap;"]')
+            id_id = ids.text
+            print(id_id)
+            res = json.loads(id_id)
+            Trace_id = res['trace_id']
+            print('Trace_id:------------',Trace_id)
+        except:
+            Trace_id = '617a5148421aa9600f98d653'
+            print('except:------------',Trace_id)
 
-
-        firefoxOptions = Options()
-        firefoxOptions.add_argument("-headless")
-        driver = webdriver.Firefox(executable_path="./geckodriver", options=firefoxOptions)
 
         # Instagram Login
         loader = Instaloader()
@@ -43,7 +55,7 @@ class Login:
             
         # Scraped username is stored in user list_of_user.
         list_of_user = []
-        
+        print("***********")
         for users in self.user:
 
             print('users:---------------',users)
@@ -122,15 +134,13 @@ class Login:
                                 except:
                                     url_post = ''
                                 urls = str(url)+','+str(url_)+','+url_s+','+url_post
-                                print(urls)
-                            Trace_id = '6177d265421aa9234b8c6998'
                             Url = "https://beta.scouted.by/v1/insertDeepScouting?id=d0dd6e0cf620541fdd14527cc9a9813a&signature=d0dd6e0cf620541fdd14527cc9a9813a-"+str(Trace_id)+'-'+str(user_name)+'-'+"02a21adad3229c35f5bfc20ecbbb9ae1&followers="+str(followers)+"&following="+str(Following)+"&profile_photo="+str(profile_pic)+"&blocked=0&description="+str(description)+"&photos[]="+urls+"=&trace_id="+str(Trace_id)+"&instagram="+str(user_name)
                             driver.get(Url)
                         except:
                             pass
                     except:
                         pass
-                    time.sleep(20)
+                    time.sleep(25)
            
             # Get_info function call        
             Get_info(list_of_user)
@@ -146,6 +156,6 @@ with open('scoutinglist - Blad.csv', 'r') as file:
     reader = csv.reader(file)
     for row in reader:
         scraped_users.append(row[0])
-scraped_user = ['engg_jass']
-Username = Login(Insta_user,Insta_password, scraped_user)
+Username = Login(Insta_user,Insta_password, scraped_users)
 Username.Infomation()
+
