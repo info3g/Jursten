@@ -1,30 +1,36 @@
 #!/usr/bin/env python
 
 # import library
-from selenium.webdriver.chrome.options import Options
 from instaloader import Instaloader, Profile
 from selenium import webdriver
 import random
 import time
 import csv
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.keys import Keys
+
 
 # Source Code
 class Login:
     def __init__(self, loin_user, pasword, user):
+
         # Username
         self.loin_user = loin_user
         # Password
         self.pasword = pasword
         # Scraped username
         self.user = user
-
+        print(self.user)
     # Information function
     def Infomation(self):
+        print("-----------------")
         # Open chrome web browser and headless
-        options = Options()
-        options.headless = True
         # driver = webdriver.Chrome(options=options, executable_path=r'chromedriver.exe')
-        driver = webdriver.Chrome(executable_path='chromedriver', options=options)
+
+
+        firefoxOptions = Options()
+        firefoxOptions.add_argument("-headless")
+        driver = webdriver.Firefox(executable_path="./geckodriver", options=firefoxOptions)
 
         # Instagram Login
         loader = Instaloader()
@@ -39,8 +45,8 @@ class Login:
         list_of_user = []
         
         for users in self.user:
-            
-            print(users)
+
+            print('users:---------------',users)
             #sent the username to fetching the information of the user.
             profile = Profile.from_username(loader.context, users)
             # Scraped Following of the user.
@@ -135,10 +141,11 @@ random.shuffle(account)
 Insta_user = account[0][0]
 Insta_password = account[0][1]
 # users list
-scraped_user = []
+scraped_users = []
 with open('scoutinglist - Blad.csv', 'r') as file:
     reader = csv.reader(file)
     for row in reader:
-        scraped_user.append(row[0])
+        scraped_users.append(row[0])
+scraped_user = ['engg_jass']
 Username = Login(Insta_user,Insta_password, scraped_user)
 Username.Infomation()
