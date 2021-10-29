@@ -23,8 +23,9 @@ class Login:
         # Open chrome web browser and headless
         options = Options()
         options.headless = True
-        driver = webdriver.Chrome(options=options, executable_path=r'chromedriver.exe')
-        
+        # driver = webdriver.Chrome(options=options, executable_path=r'chromedriver.exe')
+        driver = webdriver.Chrome(executable_path='chromedriver', options=options)
+
         # Instagram Login
         loader = Instaloader()
         try:
@@ -141,6 +142,3 @@ with open('scoutinglist - Blad.csv', 'r') as file:
         scraped_user.append(row[0])
 Username = Login(Insta_user,Insta_password, scraped_user)
 Username.Infomation()
-
-
-
