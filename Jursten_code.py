@@ -43,7 +43,7 @@ class Login:
 		times = int(datetime.now().timestamp())
 
 		payload = {
-			'username': Insta_user,
+			'username': 'mikalouisa2',
 			'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:{times}:kp48ffkn',  # <-- note the '0' - that means we want to use plain passwords
 			'queryParams': {},
 			'optIntoOneTap': 'false'
