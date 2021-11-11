@@ -43,7 +43,7 @@ class Login:
 		times = int(datetime.now().timestamp())
 
 		payload = {
-			'username': 'mikalouisa2',
+			'username': 'LianneStaps9',
 			'enc_password': f'#PWD_INSTAGRAM_BROWSER:0:{times}:kp48ffkn',  # <-- note the '0' - that means we want to use plain passwords
 			'queryParams': {},
 			'optIntoOneTap': 'false'
@@ -164,7 +164,7 @@ with open('scoutinglist - Blad.csv', 'r') as file:
 	reader = csv.reader(file)
 	for row in reader:
 		scraped_user.append(row[0])
-Username = Login('scout_marie1','na888888',scraped_user)
+Username = Login('LianneStaps9','kp48ffkn',scraped_user)
 Username.Information()
 
 
