@@ -104,6 +104,8 @@ class Login:
 						print("New user:-----------------",user_name)
 						data = s.get('https://www.instagram.com/'+str(user_name)+'/?__a=1')
 						details = json.loads(data.text)['graphql']['user']
+						time.sleep(6)
+						
 						# User rofile description
 						description = details['biography']
 						# User followers count
